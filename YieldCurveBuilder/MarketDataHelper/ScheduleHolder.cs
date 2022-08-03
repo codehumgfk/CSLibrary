@@ -6,18 +6,20 @@ namespace MarketDataHelper
 {
     public class ScheduleHolder
     {
-        public Schedule FixedSide;
-        public Schedule FloatingSide;
+        public readonly DateTime AsOf;
+        public readonly List<Schedule> FixedSide;
+        public readonly List<Schedule> FloatingSide;
 
-        public ScheduleHolder(Schedule fixedSide, Schedule floatingSide)
+        public ScheduleHolder(DateTime asof, List<Schedule> fixedSide, List<Schedule> floatingSide)
         {
+            AsOf = asof;
             FixedSide = fixedSide;
             FloatingSide = floatingSide;
         }
 
         public ScheduleHolder Copy()
         {
-            return new ScheduleHolder(FixedSide.Copy(), FloatingSide.Copy());
+            return new ScheduleHolder(AsOf, new List<Schedule>(FixedSide), new List<Schedule>(FloatingSide));
         }
     }
 }

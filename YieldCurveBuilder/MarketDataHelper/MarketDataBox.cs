@@ -6,8 +6,9 @@ namespace MarketDataHelper
 {
     public class MarketDataBox
     {
-        public Dictionary<string, List<DateTime>> Holidays;
-        public List<ScheduleHolder> Schedules { get; set; }
+        public Dictionary<string, List<DateTime>> Holidays { get; set; }
+        public Dictionary<QuoteKey, double> MarketQuote { get; set; }
+        public Dictionary<QuoteKey, ScheduleHolder> Schedules { get; set; }
     }
 
 }

@@ -1,11 +1,82 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "EquationSolver/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/EquationSolver.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EquationSolver.dll": {}
+        }
+      },
+      "Interpolator/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Interpolator.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Interpolator.dll": {}
+        }
+      },
+      "MarketDataHelper/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/MarketDataHelper.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MarketDataHelper.dll": {}
+        }
+      },
+      "MarketProduct/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Interpolator": "1.0.0",
+          "MarketDataHelper": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MarketProduct.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MarketProduct.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "EquationSolver/1.0.0": {
+      "type": "project",
+      "path": "../EquationSolver/EquationSolver.csproj",
+      "msbuildProject": "../EquationSolver/EquationSolver.csproj"
+    },
+    "Interpolator/1.0.0": {
+      "type": "project",
+      "path": "../Interpolator/Interpolator.csproj",
+      "msbuildProject": "../Interpolator/Interpolator.csproj"
+    },
+    "MarketDataHelper/1.0.0": {
+      "type": "project",
+      "path": "../MarketDataHelper/MarketDataHelper.csproj",
+      "msbuildProject": "../MarketDataHelper/MarketDataHelper.csproj"
+    },
+    "MarketProduct/1.0.0": {
+      "type": "project",
+      "path": "../MarketProduct/MarketProduct.csproj",
+      "msbuildProject": "../MarketProduct/MarketProduct.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "EquationSolver >= 1.0.0",
+      "Interpolator >= 1.0.0",
+      "MarketDataHelper >= 1.0.0",
+      "MarketProduct >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\naoki\\.nuget\\packages\\": {}
@@ -13,11 +84,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\DFCurveBuilder\\DFCurveBuilder.csproj",
+      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\DFCurveBuilder\\DFCurveBuilder.csproj",
       "projectName": "DFCurveBuilder",
-      "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\DFCurveBuilder\\DFCurveBuilder.csproj",
+      "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\DFCurveBuilder\\DFCurveBuilder.csproj",
       "packagesPath": "C:\\Users\\naoki\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\DFCurveBuilder\\obj\\",
+      "outputPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\DFCurveBuilder\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\naoki\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -33,7 +104,20 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj"
+            },
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj"
+            },
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj"
+            },
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketProduct\\MarketProduct.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketProduct\\MarketProduct.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

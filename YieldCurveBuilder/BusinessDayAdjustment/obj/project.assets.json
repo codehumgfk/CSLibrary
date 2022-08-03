@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\BusinessDayAdjustment\\BusinessDayAdjustment.csproj",
+      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\BusinessDayAdjustment\\BusinessDayAdjustment.csproj",
       "projectName": "BusinessDayAdjustment",
-      "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\BusinessDayAdjustment\\BusinessDayAdjustment.csproj",
+      "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\BusinessDayAdjustment\\BusinessDayAdjustment.csproj",
       "packagesPath": "C:\\Users\\naoki\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\BusinessDayAdjustment\\obj\\",
+      "outputPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\BusinessDayAdjustment\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\naoki\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +53,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj": {
-              "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj"
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj"
             }
           }
         }

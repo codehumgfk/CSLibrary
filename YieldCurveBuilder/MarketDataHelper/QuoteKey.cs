@@ -23,7 +23,15 @@ namespace MarketDataHelper
             Product = EnumParser.ParseEProduct(sProduct);
             ProductTerm = productTerm;
         }
-
+        public override bool Equals(object obj)
+        {
+            var qkObj = obj as QuoteKey;
+            return IRIndex.Equals(qkObj.IRIndex) && Product == qkObj.Product && ProductTerm == qkObj.ProductTerm;
+        }
+        public override int GetHashCode()
+        {
+            return IRIndex.GetHashCode() + Product.GetHashCode() + ProductTerm.GetHashCode();
+        }
         public override string ToString()
         {
             return IRIndex.ToString() + string.Format(",{0},{1}", Product, ProductTerm);

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj": {}
+    "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj": {
+    "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj",
+        "projectUniqueName": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj",
         "projectName": "Interpolator",
-        "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj",
+        "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj",
         "packagesPath": "C:\\Users\\naoki\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\Interpolator\\obj\\",
+        "outputPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\naoki\\AppData\\Roaming\\NuGet\\NuGet.Config",

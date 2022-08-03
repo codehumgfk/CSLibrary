@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj": {}
+    "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj": {
+    "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj",
+        "projectUniqueName": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj",
         "projectName": "EquationSolver",
-        "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj",
+        "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\EquationSolver\\EquationSolver.csproj",
         "packagesPath": "C:\\Users\\naoki\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\EquationSolver\\obj\\",
+        "outputPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\EquationSolver\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\naoki\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -6,6 +6,10 @@ namespace EquationSolver
 {
     public static class SolverFactory
     {
+        public static ISolver GetSolver(SolverInfo solverInfo)
+        {
+            return GetSolver(solverInfo.SolverKind, solverInfo.Config);
+        }
         public static ISolver GetSolver(ESolver eSolver, SolverConfig sConfig)
         {
             switch (eSolver)

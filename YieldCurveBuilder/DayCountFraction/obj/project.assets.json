@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\DayCountFraction\\DayCountFraction.csproj",
+      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\DayCountFraction\\DayCountFraction.csproj",
       "projectName": "DayCountFraction",
-      "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\DayCountFraction\\DayCountFraction.csproj",
+      "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\DayCountFraction\\DayCountFraction.csproj",
       "packagesPath": "C:\\Users\\naoki\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\DayCountFraction\\obj\\",
+      "outputPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\DayCountFraction\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\naoki\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +53,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj": {
-              "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj"
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj"
             }
           }
         }

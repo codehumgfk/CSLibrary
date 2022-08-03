@@ -4,4 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EquationSolver\EquationSolver.csproj" />
+    <ProjectReference Include="..\Interpolator\Interpolator.csproj" />
+    <ProjectReference Include="..\MarketDataHelper\MarketDataHelper.csproj" />
+    <ProjectReference Include="..\MarketProduct\MarketProduct.csproj" />
+  </ItemGroup>
+
 </Project>

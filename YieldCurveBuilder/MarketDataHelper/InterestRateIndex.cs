@@ -6,9 +6,9 @@ namespace MarketDataHelper
 {
     public class InterestRateIndex
     {
-        public EIndexKind IndexKind;
-        public double Tenor; // months
-        public string Currency;
+        public readonly EIndexKind IndexKind;
+        public readonly double Tenor; // months
+        public readonly string Currency;
 
         public InterestRateIndex(EIndexKind eIndexKind, double tenor, string currency)
         {
@@ -28,7 +28,15 @@ namespace MarketDataHelper
         {
             return new InterestRateIndex(IndexKind, Tenor, Currency);
         }
-
+        public override bool Equals(object obj)
+        {
+            var irObj = obj as InterestRateIndex;
+            return IndexKind == irObj.IndexKind && Tenor == irObj.Tenor && Currency == irObj.Currency;
+        }
+        public override int GetHashCode()
+        {
+            return IndexKind.GetHashCode() + Tenor.GetHashCode() + Currency.GetHashCode();
+        }
         public override string ToString()
         {
             return string.Join('.', new List<string> { IndexKind.ToString(), Tenor.ToString(), Currency.ToString()});

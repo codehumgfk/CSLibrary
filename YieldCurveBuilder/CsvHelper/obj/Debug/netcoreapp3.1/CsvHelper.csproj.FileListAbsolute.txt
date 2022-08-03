@@ -1,0 +1,9 @@
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\bin\Debug\netcoreapp3.1\CsvHelper.deps.json
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\bin\Debug\netcoreapp3.1\CsvHelper.dll
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\bin\Debug\netcoreapp3.1\CsvHelper.pdb
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\obj\Debug\netcoreapp3.1\CsvHelper.csprojAssemblyReference.cache
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\obj\Debug\netcoreapp3.1\CsvHelper.AssemblyInfoInputs.cache
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\obj\Debug\netcoreapp3.1\CsvHelper.AssemblyInfo.cs
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\obj\Debug\netcoreapp3.1\CsvHelper.csproj.CoreCompileInputs.cache
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\obj\Debug\netcoreapp3.1\CsvHelper.dll
+C:\Users\naoki\Desktop\workdir\YieldCurveBuilder\CsvHelper\obj\Debug\netcoreapp3.1\CsvHelper.pdb

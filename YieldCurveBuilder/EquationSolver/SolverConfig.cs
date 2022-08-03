@@ -11,6 +11,7 @@ namespace EquationSolver
 
         public SolverConfig(double accuracy, int maxSteps)
         {
+            CheckInputs(accuracy, maxSteps);
             Accuracy = accuracy;
             MaxSteps = maxSteps;
         }
@@ -18,6 +19,12 @@ namespace EquationSolver
         public SolverConfig Copy()
         {
             return new SolverConfig(Accuracy, MaxSteps);
+        }
+
+        private void CheckInputs(double accuracy, int maxSteps)
+        {
+            if (accuracy <= 0) throw new ArgumentException("Accuracy must be strictly nonnegative.");
+            if (maxSteps <= 0) throw new ArgumentException("MaxSteps must be strictly nonnegative.");
         }
     }
 }

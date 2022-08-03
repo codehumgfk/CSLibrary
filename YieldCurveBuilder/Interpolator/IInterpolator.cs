@@ -6,6 +6,6 @@ namespace Interpolator
 {
     public interface IInterpolator
     {
-        public double Interpolate(double x, bool allowExtrapolation);
+        public double Interpolate(double x, bool allowExtrapolation=false);
     }
 }

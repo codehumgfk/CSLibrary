@@ -6,17 +6,21 @@ namespace Interpolator
 {
     public abstract class AbstractInterpolator : IInterpolator
     {
-        public readonly IList<double> xs;
-        public readonly IList<double> ys;
+        protected IList<double> xs;
+        protected IList<double> ys;
 
         public AbstractInterpolator(IList<double> xList, IList<double> yList)
         {
             xs = xList;
             ys = yList;
         }
-
-        public abstract double Interpolate(double x, bool allowExtrapolation);
-
+        public abstract double Interpolate(double x, bool allowExtrapolation=false);
+        private void CheckInputList()
+        {
+            if (xs == null || ys == null) throw new ArgumentException("Input lists must not be null.");
+            if (xs.Count != ys.Count) throw new ArgumentException("Counts of input lists must be same.");
+            CheckXListSorted(xs);
+        }
         private void CheckXListSorted(IList<double> xList)
         {
             for (var i = 0; i < xList.Count - 1; i++)
@@ -24,14 +28,7 @@ namespace Interpolator
                 if (xList[i] > xList[i + 1]) throw new ArgumentException("The input xs must be sorted.");
             }
         }
-
-        protected void CheckXIndex(int index, bool allowExtrapolation)
-        {
-            if (index == -1 && !allowExtrapolation) throw new ArgumentException(string.Format("Extrapolation is not allowed( the input is smaller than xMin:{0}).", xs[0]));
-            var length = xs.Count;
-            if (index == length && !allowExtrapolation) throw new ArgumentException(string.Format("Extrapolation is not allowed( the input is bigger than xMax:{0}).", xs[length - 1]));
-        }
-
+        
         protected int FindIndexOfBottomLimit(double x)
         {
             if (x < xs[0]) return -1;

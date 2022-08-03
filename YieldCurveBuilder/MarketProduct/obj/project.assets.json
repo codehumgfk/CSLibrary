@@ -2,6 +2,16 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "Interpolator/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Interpolator.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Interpolator.dll": {}
+        }
+      },
       "MarketDataHelper/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -15,6 +25,11 @@
     }
   },
   "libraries": {
+    "Interpolator/1.0.0": {
+      "type": "project",
+      "path": "../Interpolator/Interpolator.csproj",
+      "msbuildProject": "../Interpolator/Interpolator.csproj"
+    },
     "MarketDataHelper/1.0.0": {
       "type": "project",
       "path": "../MarketDataHelper/MarketDataHelper.csproj",
@@ -23,6 +38,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Interpolator >= 1.0.0",
       "MarketDataHelper >= 1.0.0"
     ]
   },
@@ -32,11 +48,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketProduct\\MarketProduct.csproj",
+      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketProduct\\MarketProduct.csproj",
       "projectName": "MarketProduct",
-      "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketProduct\\MarketProduct.csproj",
+      "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketProduct\\MarketProduct.csproj",
       "packagesPath": "C:\\Users\\naoki\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketProduct\\obj\\",
+      "outputPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketProduct\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\naoki\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +69,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj": {
-              "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj"
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\Interpolator\\Interpolator.csproj"
+            },
+            "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj": {
+              "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\MarketDataHelper\\MarketDataHelper.csproj"
             }
           }
         }

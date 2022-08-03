@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\YieldCurveBuilder\\YieldCurveBuilder.csproj",
+      "projectUniqueName": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\YieldCurveBuilder\\YieldCurveBuilder.csproj",
       "projectName": "YieldCurveBuilder",
-      "projectPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\YieldCurveBuilder\\YieldCurveBuilder.csproj",
+      "projectPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\YieldCurveBuilder\\YieldCurveBuilder.csproj",
       "packagesPath": "C:\\Users\\naoki\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\naoki\\Desktop\\YieldCurveBuilder\\YieldCurveBuilder\\obj\\",
+      "outputPath": "C:\\Users\\naoki\\Desktop\\workdir\\YieldCurveBuilder\\YieldCurveBuilder\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\naoki\\AppData\\Roaming\\NuGet\\NuGet.Config",
