@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="CurveBuilder">
+      <HintPath>..\..\YieldCurveBuilder\CurveBuilder\bin\Debug\netcoreapp3.1\CurveBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="EquationSolver">
+      <HintPath>..\..\YieldCurveBuilder\EquationSolver\bin\Debug\netcoreapp3.1\EquationSolver.dll</HintPath>
+    </Reference>
+    <Reference Include="Interpolator">
+      <HintPath>..\..\YieldCurveBuilder\Interpolator\bin\Debug\netcoreapp3.1\Interpolator.dll</HintPath>
+    </Reference>
+    <Reference Include="MarketDataHelper">
+      <HintPath>..\..\YieldCurveBuilder\MarketDataHelper\bin\Debug\netcoreapp3.1\MarketDataHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
