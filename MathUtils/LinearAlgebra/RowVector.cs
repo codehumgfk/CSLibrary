@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace MathUtils.LinearAlgebra
@@ -19,7 +20,8 @@ namespace MathUtils.LinearAlgebra
                 _Vector[i, 0] = arr[i];
             }
         }
-        public double this[int i]
+        #region Indexer
+        public override double this[int i]
         {
             get 
             {
@@ -32,6 +34,7 @@ namespace MathUtils.LinearAlgebra
                 _Vector[i, 0] = value;
             }
         }
+        #endregion
         public string Name { get; set; }
         public int[] Shape
         {
@@ -46,6 +49,18 @@ namespace MathUtils.LinearAlgebra
             var arr = To1DArray();
 
             return new ColumnVector(arr);
+        }
+        public override double Norm => CalculateNorm();
+        private double CalculateNorm()
+        {
+            var res = 0.0;
+
+            for (var rowIdx = 0; rowIdx < Length; rowIdx++)
+            {
+                res += Math.Pow(_Vector[rowIdx, 0], 2.0);
+            }
+
+            return Math.Sqrt(res);
         }
         public override void SetValue(double[] arr)
         {

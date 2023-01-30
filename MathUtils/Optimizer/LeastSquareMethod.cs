@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MathUtils.LinearAlgebra;
 
-namespace MathUtils.LinearAlgebra.Optimizer
+namespace MathUtils.Optimizer
 {
     public static class LeastSquareMethod
     {

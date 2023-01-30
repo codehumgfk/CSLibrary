@@ -4,13 +4,23 @@ using System.Text;
 
 namespace MathUtils.LinearAlgebra
 {
-    public abstract class Vector
+    public class Vector
     {
         public readonly int Length;
+
+        #region Constructor
         public Vector(int length)
         {
             Length = length;
         }
+        #endregion
+
+        #region Indexer
+        public virtual double this[int index] 
+        { get { throw new NotImplementedException("This method is not overrided."); }
+          set { throw new NotImplementedException("This method is not overrided."); } 
+        }
+        #endregion
         protected void CheckIndex(int i)
         {
             if (i < 0 || Length <= i) throw new ArgumentException("Wrong index");
@@ -23,7 +33,8 @@ namespace MathUtils.LinearAlgebra
         {
             if (vec1.Length != vec2.Length) throw new ArgumentException("Lengths of two vectors are different.");
         }
-        public abstract void SetValue(double[] arr);
-        public abstract double[] To1DArray();
+        public virtual double Norm => throw new NotImplementedException("This property is not overrided");
+        public virtual void SetValue(double[] arr) { throw new NotImplementedException("This method is not overrided."); }
+        public virtual double[] To1DArray() { throw new NotImplementedException("This method is not overrided."); }
     }
 }

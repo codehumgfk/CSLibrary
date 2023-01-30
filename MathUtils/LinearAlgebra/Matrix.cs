@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace MathUtils.LinearAlgebra
@@ -9,6 +10,8 @@ namespace MathUtils.LinearAlgebra
         private int RowLength;
         private int ColumnLength;
         private double[,] _Matrix;
+
+        #region Constructor
         public Matrix(int rowLength, int columnLength)
         {
             RowLength = rowLength;
@@ -29,7 +32,34 @@ namespace MathUtils.LinearAlgebra
                 }
             }
         }
+        public Matrix(List<List<double>> nestedList)
+        {
+            CheckNestedList(nestedList);
+            
+            RowLength = nestedList.Count;
+            ColumnLength = nestedList[0].Count;
+            _Matrix = new double[RowLength, ColumnLength];
 
+            for (var i = 0; i < RowLength; i++)
+            {
+                for (var j = 0; j < ColumnLength; j++)
+                {
+                    _Matrix[i, j] = nestedList[i][j];
+                }
+            }
+        }
+        private void CheckNestedList(List<List<double>> nested)
+        {
+            var colLength = nested[0].Count;
+            
+            foreach(var list in nested)
+            {
+                if (list.Count != colLength) throw new NotSupportedException();
+            }
+        }
+        #endregion
+
+        #region Indexer
         public double this[int i, int j]
         {
             get
@@ -43,6 +73,7 @@ namespace MathUtils.LinearAlgebra
                 _Matrix[i, j] = value;
             }
         }
+        #endregion
         public string Name { get; set; }
         public int[] Shape
         {
@@ -296,6 +327,36 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
+
+        #region Convert Method
+        public RowVector ToRowVector()
+        {
+            if (ColumnLength != 1) throw new NotSupportedException("This matrix cannot be converted to RowVector.");
+
+            var res = new RowVector(RowLength);
+            
+            for (var i = 0; i < RowLength; i++)
+            {
+                res[i] = _Matrix[i, 0];
+            }
+
+            return res;
+        }
+        public ColumnVector ToColumnVector()
+        {
+            if (RowLength != 1) throw new NotSupportedException("This matrix cannot be converted to ColumnVector.");
+
+            var res = new ColumnVector(ColumnLength);
+
+            for (var i = 0; i < ColumnLength; i++)
+            {
+                res[i] = _Matrix[0, i];
+            }
+
+            return res;
+        }
+        #endregion
+
         #region Operator Overload
         public static Matrix operator +(Matrix a, Matrix b)
         {
