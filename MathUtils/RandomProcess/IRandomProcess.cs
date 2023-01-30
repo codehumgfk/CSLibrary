@@ -7,5 +7,6 @@ namespace MathUtils.RandomProcess
     public interface IRandomProcess
     {
         public double Generate(double dt, double random);
+        public void Reset();
     }
 }

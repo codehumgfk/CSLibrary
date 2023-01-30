@@ -73,6 +73,21 @@ namespace MathUtils.LinearAlgebra
                 _Matrix[i, j] = value;
             }
         }
+        public double[] this[List<int[]> indexList]
+        {
+            get
+            {
+                var len = indexList.Count;
+                var res = new double[len];
+                for (var i = 0; i < len; i++)
+                {
+                    var index = indexList[0];
+                    CheckRowColIndex(index[0], index[1]);
+                    res[i] = _Matrix[index[0], index[1]];
+                }
+                return res;
+            }
+        }
         #endregion
         public string Name { get; set; }
         public int[] Shape

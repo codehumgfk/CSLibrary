@@ -17,8 +17,13 @@ namespace MathUtils.LinearAlgebra
 
         #region Indexer
         public virtual double this[int index] 
-        { get { throw new NotImplementedException("This method is not overrided."); }
+        { 
+            get { throw new NotImplementedException("This method is not overrided."); }
           set { throw new NotImplementedException("This method is not overrided."); } 
+        }
+        public virtual Vector this[List<int> indexList]
+        {
+            get { throw new NotImplementedException("This method is not overrided."); }
         }
         #endregion
         protected void CheckIndex(int i)

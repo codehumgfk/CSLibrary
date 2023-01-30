@@ -20,14 +20,14 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static ColumnVector FilterElementwise(this ColumnVector vec, Func<double, bool> func)
+        public static List<int> FilterElementwise(this ColumnVector vec, Func<double, bool> func)
         {
             var colLength = vec.Length;
-            var res = new ColumnVector(colLength);
+            var res = new List<int>();
 
             for (var colIdx = 0; colIdx < colLength; colIdx++)
             {
-                res[colIdx] = func(vec[colIdx]) ? 1.0 : 0.0;
+                if (func(vec[colIdx])) res.Add(colIdx);
             }
 
             return res;

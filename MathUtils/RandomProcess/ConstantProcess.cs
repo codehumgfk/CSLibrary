@@ -16,6 +16,7 @@ namespace MathUtils.RandomProcess
         {
             return _Constant;
         }
+        public void Reset() { }
         public double Constant
         {
             get { return _Constant; }

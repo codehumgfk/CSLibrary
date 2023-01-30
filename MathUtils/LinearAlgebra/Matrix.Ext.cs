@@ -84,18 +84,18 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static Matrix FilterElementwise(this Matrix matrix, Func<double, bool> func)
+        public static List<int[]> FilterElementwise(this Matrix matrix, Func<double, bool> func)
         {
             var shape = matrix.Shape;
             var rowLength = shape[0];
             var colLength = shape[1];
-            var res = new Matrix(rowLength, colLength);
+            var res = new List<int[]>();
 
             for (var rowIdx = 0; rowIdx < rowLength; rowIdx++)
             {
                 for (var colIdx = 0; colIdx < colLength; colIdx++)
                 {
-                    res[rowIdx, colIdx] = func(matrix[rowIdx, colIdx]) ? 1.0 : 0.0;
+                    if (func(matrix[rowIdx, colIdx])) res.Add(new int[2] { rowIdx, colIdx });
                 }
             }
 

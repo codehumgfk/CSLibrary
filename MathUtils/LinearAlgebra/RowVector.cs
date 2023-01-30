@@ -34,6 +34,20 @@ namespace MathUtils.LinearAlgebra
                 _Vector[i, 0] = value;
             }
         }
+        public override RowVector this[List<int> indexList]
+        {
+            get 
+            { 
+                var len = indexList.Count;
+                var res = new RowVector(len);
+                for (var i = 0; i < len; i++)
+                {
+                    CheckIndex(indexList[i]);
+                    res[i] = _Vector[indexList[i], 0];
+                }
+                return res;
+            }
+        }
         #endregion
         public string Name { get; set; }
         public int[] Shape
