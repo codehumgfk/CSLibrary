@@ -82,6 +82,7 @@ namespace MathUtils.LinearAlgebra
                 for (var i = 0; i < len; i++)
                 {
                     var index = indexList[0];
+                    if (index.Length != 2) throw new ArgumentException("Wrong format of an index array.");
                     CheckRowColIndex(index[0], index[1]);
                     res[i] = _Matrix[index[0], index[1]];
                 }
@@ -116,10 +117,7 @@ namespace MathUtils.LinearAlgebra
 
             return new Matrix(transposed);
         }
-        public double Tr
-        {
-            get { return GetTrace(); }
-        }
+        public double Tr => GetTrace();
         public double GetTrace()
         {
             if (!IsSquare) throw new NotSupportedException();

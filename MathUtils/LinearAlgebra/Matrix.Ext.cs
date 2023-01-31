@@ -6,6 +6,7 @@ namespace MathUtils.LinearAlgebra
 {
     public static class MatrixExtensions
     {
+        #region Sum Methods
         public static Matrix Sum(this Matrix matrix, EMatrixAxis axis)
         {
             switch (axis)
@@ -67,6 +68,8 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
+        #endregion
+
         public static Matrix MapElementwise(this Matrix matrix, Func<double, double> func)
         {
             var shape = matrix.Shape;
