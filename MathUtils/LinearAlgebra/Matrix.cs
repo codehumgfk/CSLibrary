@@ -91,18 +91,10 @@ namespace MathUtils.LinearAlgebra
         }
         #endregion
         public string Name { get; set; }
-        public int[] Shape
-        {
-            get { return new int[2] { RowLength, ColumnLength }; }
-        }
-        public bool IsSquare
-        {
-            get { return RowLength == ColumnLength; }
-        }
-        public Matrix T
-        {
-            get { return Transpose(); }
-        }
+        public int[] Shape => new int[2] { RowLength, ColumnLength };
+        
+        public bool IsSquare => RowLength == ColumnLength;
+        public Matrix T => Transpose();
         public Matrix Transpose()
         {
             var transposed = new double[ColumnLength, RowLength];
@@ -155,14 +147,8 @@ namespace MathUtils.LinearAlgebra
 
             return sign * subMat.Det;
         }
-        public bool IsRegular
-        {
-            get { return Det != 0.0; }
-        }
-        public Matrix Inv
-        {
-            get { return GetInverseMatrix(); }
-        }
+        public bool IsRegular => Det != 0.0;
+        public Matrix Inv => GetInverseMatrix();
         public Matrix GetInverseMatrix()
         {
             if (!IsRegular) throw new NotSupportedException();
