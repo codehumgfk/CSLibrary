@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MathUtils.LinearAlgebra.MatrixUtil
 {
-    public static class Diagonalization
+    public static class MethodUtil
     {
         public static (Matrix, Matrix) Diagonalize(Matrix a)
         {
