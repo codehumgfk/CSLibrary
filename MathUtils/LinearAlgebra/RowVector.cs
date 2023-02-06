@@ -8,6 +8,7 @@ namespace MathUtils.LinearAlgebra
     public class RowVector : Vector
     {
         private double[,] _Vector;
+        #region Constructor
         public RowVector(int length) : base(length)
         {
             _Vector = new double[Length, 1];
@@ -20,6 +21,7 @@ namespace MathUtils.LinearAlgebra
                 _Vector[i, 0] = arr[i];
             }
         }
+        #endregion
         #region Indexer
         public override double this[int i]
         {
@@ -34,7 +36,7 @@ namespace MathUtils.LinearAlgebra
                 _Vector[i, 0] = value;
             }
         }
-        public override RowVector this[List<int> indexList]
+        public override RowVector this[IList<int> indexList]
         {
             get 
             { 
@@ -50,31 +52,13 @@ namespace MathUtils.LinearAlgebra
         }
         #endregion
         public string Name { get; set; }
-        public int[] Shape
-        {
-            get{ return new int[2] { Length, 1 }; }
-        }
-        public ColumnVector T
-        {
-            get { return Transpose(); }
-        }
+        public int[] Shape=> new int[2] { Length, 1 };
+        public ColumnVector T=> Transpose();
         public ColumnVector Transpose()
         {
             var arr = To1DArray();
 
             return new ColumnVector(arr);
-        }
-        public override double Norm => CalculateNorm();
-        private double CalculateNorm()
-        {
-            var res = 0.0;
-
-            for (var rowIdx = 0; rowIdx < Length; rowIdx++)
-            {
-                res += Math.Pow(_Vector[rowIdx, 0], 2.0);
-            }
-
-            return Math.Sqrt(res);
         }
         public override void SetValue(double[] arr)
         {
@@ -84,6 +68,7 @@ namespace MathUtils.LinearAlgebra
                 _Vector[i, 0] = arr[i];
             }
         }
+        #region Operator Overload
         public static RowVector operator +(RowVector vec1, RowVector vec2)
         {
             CheckVecLength(vec1, vec2);
@@ -160,6 +145,7 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
+        #endregion
         public override double[] To1DArray()
         {
             var res = new double[Length];
@@ -178,6 +164,7 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
+        #region Object Method Override
         public override string ToString()
         {
             var txt = string.Format("Name: {0}\n", Name);
@@ -198,5 +185,6 @@ namespace MathUtils.LinearAlgebra
 
             return txt;
         }
+        #endregion
     }
 }

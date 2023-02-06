@@ -9,6 +9,7 @@ namespace MathUtils.LinearAlgebra
     {
         private double[,] _Vector;
 
+        #region Constructor
         public ColumnVector(int length) : base(length)
         {
             _Vector = new double[1, Length];
@@ -21,6 +22,8 @@ namespace MathUtils.LinearAlgebra
                 _Vector[0, i] = arr[i];
             }
         }
+        #endregion
+
         #region Indexer
         public override double this[int i]
         {
@@ -35,7 +38,7 @@ namespace MathUtils.LinearAlgebra
                 _Vector[0, i] = value;
             }
         }
-        public override ColumnVector this[List<int> indexList]
+        public override ColumnVector this[IList<int> indexList]
         {
             get 
             {
@@ -51,30 +54,13 @@ namespace MathUtils.LinearAlgebra
         }
         #endregion
         public string Name { get; set; }
-        public int[] Shape
-        {
-            get { return new int[2] { 1, Length }; }
-        }
-        public RowVector T
-        {
-            get { return Transpose(); }
-        }
+        public int[] Shape => new int[2] { 1, Length };
+        public RowVector T => Transpose();
         public RowVector Transpose()
         {
             var arr = To1DArray();
 
             return new RowVector(arr);
-        }
-        public override double Norm => CalculateNorm();
-        private double CalculateNorm()
-        {
-            var res = 0.0;
-            for (var colIdx = 0; colIdx < Length; colIdx++)
-            { 
-                res += Math.Pow(_Vector[0, colIdx], 2.0);
-            }
-
-            return Math.Sqrt(res);
         }
         public override void SetValue(double[] arr)
         {
