@@ -14,6 +14,7 @@ namespace MathUtils.LinearAlgebra
         #region Constructor
         public Matrix(int rowLength, int columnLength)
         {
+            if (rowLength < 1 || columnLength < 1) throw new ArgumentException("Lengths must be biggger than 1.");
             RowLength = rowLength;
             ColumnLength = columnLength;
             _Matrix = new double[rowLength, columnLength];
@@ -122,10 +123,7 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public double Det
-        {
-            get { return GetDeterminant(); }
-        }
+        public double Det => GetDeterminant();
         public double GetDeterminant()
         {
             if (!IsSquare) throw new NotSupportedException();
