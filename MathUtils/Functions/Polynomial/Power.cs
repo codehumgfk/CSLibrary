@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathUtils.PolynomialFunctions
+namespace MathUtils.Functions.Polynomial
 {
     public static class Power
     {
         public static Func<double, double> GetFunction(int dim)
         {
-            return (double x) => Math.Pow(x, dim);
+            return (x) => Math.Pow(x, dim);
         }
     }
 }
