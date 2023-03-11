@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
+using System.Numerics;
 
 namespace MathUtils.LinearAlgebra
 {
-    public class RowVector : Vector
+    public class RowVector<TNum> : Vector<TNum> where TNum : INumberBase<TNum>
     {
-        private double[,] _Vector;
+        private TNum[,] _Vector;
         #region Constructor
         public RowVector(int length) : base(length)
         {
-            _Vector = new double[Length, 1];
+            _Vector = new TNum[Length, 1];
         }
-        public RowVector(double[] arr) : base(arr.Length)
+        public RowVector(TNum[] arr) : base(arr.Length)
         {
-            _Vector = new double[Length, 1];
-            for (var i = 0; i < Length; i++)
-            {
-                _Vector[i, 0] = arr[i];
-            }
+            _Vector = new TNum[Length, 1];
+            SetValue(arr);
+        }
+        private RowVector(RowVector<TNum> rowVec) : base(rowVec.Length)
+        {
+            _Vector = new TNum[Length, 1];
+            SetValue(rowVec.To1DArray());
         }
         #endregion
         #region Indexer
-        public override double this[int i]
+        public override TNum this[int i]
         {
             get 
             {
@@ -36,12 +37,12 @@ namespace MathUtils.LinearAlgebra
                 _Vector[i, 0] = value;
             }
         }
-        public override RowVector this[IList<int> indexList]
+        public override RowVector<TNum> this[IList<int> indexList]
         {
             get 
             { 
                 var len = indexList.Count;
-                var res = new RowVector(len);
+                var res = new RowVector<TNum>(len);
                 for (var i = 0; i < len; i++)
                 {
                     CheckIndex(indexList[i]);
@@ -53,14 +54,14 @@ namespace MathUtils.LinearAlgebra
         #endregion
         public string Name { get; set; }
         public int[] Shape=> new int[2] { Length, 1 };
-        public ColumnVector T=> Transpose();
-        public ColumnVector Transpose()
+        public ColumnVector<TNum> T=> Transpose();
+        public ColumnVector<TNum> Transpose()
         {
             var arr = To1DArray();
 
-            return new ColumnVector(arr);
+            return new ColumnVector<TNum>(arr);
         }
-        public override void SetValue(double[] arr)
+        public override void SetValue(TNum[] arr)
         {
             CheckArrayLength(arr);
             for (var i = 0; i < Length; i++)
@@ -69,11 +70,11 @@ namespace MathUtils.LinearAlgebra
             }
         }
         #region Operator Overload
-        public static RowVector operator +(RowVector vec1, RowVector vec2)
+        public static RowVector<TNum> operator +(RowVector<TNum> vec1, RowVector<TNum> vec2)
         {
             CheckVecLength(vec1, vec2);
             var length = vec1.Length;
-            var res = new RowVector(length);
+            var res = new RowVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {
@@ -82,10 +83,10 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static RowVector operator -(RowVector vec)
+        public static RowVector<TNum> operator -(RowVector<TNum> vec)
         {
             var length = vec.Length;
-            var res = new RowVector(length);
+            var res = new RowVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {
@@ -94,15 +95,15 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static RowVector operator -(RowVector vec1, RowVector vec2)
+        public static RowVector<TNum> operator -(RowVector<TNum> vec1, RowVector<TNum> vec2)
         {
             var vec2Neg = -vec2;
             return vec1 + vec2Neg;
         }
-        public static RowVector operator *(double n, RowVector rowVec)
+        public static RowVector<TNum> operator *(TNum n, RowVector<TNum> rowVec)
         {
             var length = rowVec.Length;
-            var res = new RowVector(length);
+            var res = new RowVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {
@@ -111,15 +112,15 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static RowVector operator *(RowVector rowVec, double n)
+        public static RowVector<TNum> operator *(RowVector<TNum> rowVec, TNum n)
         {
             return n * rowVec;
         }
-        public static Matrix operator *(RowVector rowVec, ColumnVector colVec)
+        public static Matrix<TNum> operator *(RowVector<TNum> rowVec, ColumnVector<TNum> colVec)
         {
             var rowLength = rowVec.Length;
             var colLength = colVec.Length;
-            var res = new Matrix(rowLength, colLength);
+            var res = new Matrix<TNum>(rowLength, colLength);
 
             for (var j = 0; j < colLength; j++)
             {
@@ -129,14 +130,14 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static RowVector operator /(RowVector vec1, RowVector vec2)
+        public static RowVector<TNum> operator /(RowVector<TNum> vec1, RowVector<TNum> vec2)
         {
             throw new NotSupportedException();
         }
-        public static RowVector operator /(RowVector vec, double n)
+        public static RowVector<TNum> operator /(RowVector<TNum> vec, TNum n)
         {
             var length = vec.Length;
-            var res = new RowVector(length);
+            var res = new RowVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {
@@ -146,9 +147,9 @@ namespace MathUtils.LinearAlgebra
             return res;
         }
         #endregion
-        public override double[] To1DArray()
+        public override TNum[] To1DArray()
         {
-            var res = new double[Length];
+            var res = new TNum[Length];
 
             for (var i = 0; i < Length; i++)
             {
@@ -157,9 +158,21 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public Matrix ToMatrix()
+        public override RowVector<TNum> Clone() => new RowVector<TNum>(this);
+        public override RowVector<TNum> MapElementwise(Func<TNum, TNum> func)
         {
-            var res = new Matrix(Length, 1);
+            var res = new RowVector<TNum>(Length);
+
+            for (var rowIdx = 0; rowIdx < Length; rowIdx++)
+            {
+                res[rowIdx] = func(this[rowIdx]);
+            }
+
+            return res;
+        }
+        public Matrix<TNum> ToMatrix()
+        {
+            var res = new Matrix<TNum>(Length, 1);
             res.SetRowVector(1, this);
 
             return res;

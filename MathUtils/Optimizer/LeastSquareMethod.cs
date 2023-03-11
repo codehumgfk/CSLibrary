@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MathUtils.LinearAlgebra;
+﻿using MathUtils.LinearAlgebra;
+using System.Numerics;
 
 namespace MathUtils.Optimizer
 {
     public static class LeastSquareMethod
     {
-        public static RowVector Optimize(Matrix A, RowVector b)
+        public static RowVector<TNum> Optimize<TNum>(Matrix<TNum> A, RowVector<TNum> b) where TNum : INumberBase<TNum>
         {
             var regA = A.T * A;
 

@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
+using System.Numerics;
 
 namespace MathUtils.LinearAlgebra
 {
-    public class ColumnVector : Vector
+    public class ColumnVector<TNum> : Vector<TNum> where TNum : INumberBase<TNum>
     {
-        private double[,] _Vector;
+        private TNum[,] _Vector;
 
         #region Constructor
         public ColumnVector(int length) : base(length)
         {
-            _Vector = new double[1, Length];
+            _Vector = new TNum[1, Length];
         }
-        public ColumnVector(double[] arr) : base(arr.Length)
+        public ColumnVector(TNum[] arr) : base(arr.Length)
         {
-            _Vector = new double[1, Length];
-            for (var i = 0; i < Length; i++)
-            {
-                _Vector[0, i] = arr[i];
-            }
+            _Vector = new TNum[1, Length];
+            SetValue(arr);
+        }
+        private ColumnVector(ColumnVector<TNum> colVec) : base(colVec.Length)
+        {
+            _Vector = new TNum[1, Length];
+            SetValue(colVec.To1DArray());
         }
         #endregion
 
         #region Indexer
-        public override double this[int i]
+        public override TNum this[int i]
         {
             get 
             {
@@ -38,12 +39,12 @@ namespace MathUtils.LinearAlgebra
                 _Vector[0, i] = value;
             }
         }
-        public override ColumnVector this[IList<int> indexList]
+        public override ColumnVector<TNum> this[IList<int> indexList]
         {
             get 
             {
                 var len = indexList.Count;
-                var res = new ColumnVector(len);
+                var res = new ColumnVector<TNum>(len);
                 for (var i = 0; i < len; i++)
                 {
                     CheckIndex(indexList[i]);
@@ -55,23 +56,23 @@ namespace MathUtils.LinearAlgebra
         #endregion
         public string Name { get; set; }
         public int[] Shape => new int[2] { 1, Length };
-        public RowVector T => Transpose();
-        public RowVector Transpose()
+        public RowVector<TNum> T => Transpose();
+        public RowVector<TNum> Transpose()
         {
             var arr = To1DArray();
 
-            return new RowVector(arr);
+            return new RowVector<TNum>(arr);
         }
-        public override void SetValue(double[] arr)
+        public override void SetValue(TNum[] arr)
         {
             for (var i = 0; i < Length; i++)
             {
                 _Vector[0, i] = arr[i];
             }
         }
-        public override double[] To1DArray()
+        public override TNum[] To1DArray()
         {
-            var res = new double[Length];
+            var res = new TNum[Length];
 
             for (var i = 0; i < Length; i++)
             {
@@ -80,19 +81,31 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public Matrix ToMatrix()
+        public override ColumnVector<TNum> Clone() => new ColumnVector<TNum>(this);
+        public override ColumnVector<TNum> MapElementwise(Func<TNum, TNum> func)
         {
-            var res = new Matrix(1, Length);
+            var res = new ColumnVector<TNum>(Length);
+
+            for (var colIdx = 0; colIdx < Length; colIdx++)
+            {
+                res[colIdx] = func(this[colIdx]);
+            }
+
+            return res;
+        }
+        public Matrix<TNum> ToMatrix()
+        {
+            var res = new Matrix<TNum>(1, Length);
             res.SetColumnVector(0, this);
 
             return res;
         }
         #region Operator Overload
-        public static ColumnVector operator +(ColumnVector vec1, ColumnVector vec2)
+        public static ColumnVector<TNum> operator +(ColumnVector<TNum> vec1, ColumnVector<TNum> vec2)
         {
             CheckVecLength(vec1, vec2);
             var length = vec1.Length;
-            var res = new ColumnVector(length);
+            var res = new ColumnVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {
@@ -101,10 +114,10 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static ColumnVector operator -(ColumnVector vec)
+        public static ColumnVector<TNum> operator -(ColumnVector<TNum> vec)
         {
             var length = vec.Length;
-            var res = new ColumnVector(length);
+            var res = new ColumnVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {
@@ -113,15 +126,15 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static ColumnVector operator -(ColumnVector vec1, ColumnVector vec2)
+        public static ColumnVector<TNum> operator -(ColumnVector<TNum> vec1, ColumnVector<TNum> vec2)
         {
             var vec2Neg = -vec2;
             return vec1 + vec2Neg;
         }
-        public static ColumnVector operator *(double n, ColumnVector vec)
+        public static ColumnVector<TNum> operator *(TNum n, ColumnVector<TNum> vec)
         {
             var length = vec.Length;
-            var res = new ColumnVector(length);
+            var res = new ColumnVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {
@@ -130,14 +143,14 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static ColumnVector operator *(ColumnVector rowVec, double n)
+        public static ColumnVector<TNum> operator *(ColumnVector<TNum> rowVec, TNum n)
         {
             return n * rowVec;
         }
-        public static double operator *(ColumnVector colVec, RowVector rowVec)
+        public static TNum operator *(ColumnVector<TNum> colVec, RowVector<TNum> rowVec)
         {
             CheckVecLength(colVec, rowVec);
-            var res = 0.0;
+            var res = TNum.Zero;
 
             for (var i = 0; i < colVec.Length; i++)
             {
@@ -146,14 +159,14 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static ColumnVector operator /(ColumnVector vec1, ColumnVector vec2)
+        public static ColumnVector<TNum> operator /(ColumnVector<TNum> vec1, ColumnVector<TNum> vec2)
         {
             throw new NotSupportedException();
         }
-        public static ColumnVector operator /(ColumnVector vec, double n)
+        public static ColumnVector<TNum> operator /(ColumnVector<TNum> vec, TNum n)
         {
             var length = vec.Length;
-            var res = new ColumnVector(length);
+            var res = new ColumnVector<TNum>(length);
 
             for (var i = 0; i < length; i++)
             {

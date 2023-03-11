@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Numerics;
 
 namespace MathUtils.LinearAlgebra
 {
-    public class Vector
+    public class Vector<TNum> where TNum : INumberBase<TNum>
     {
         public readonly int Length;
 
@@ -16,33 +16,47 @@ namespace MathUtils.LinearAlgebra
         #endregion
 
         #region Indexer
-        public virtual double this[int index] 
+        public virtual TNum this[int index] 
         { 
             get { throw new NotImplementedException("This method is not overrided."); }
             set { throw new NotImplementedException("This method is not overrided."); } 
         }
-        public virtual Vector this[IList<int> indexList] => throw new NotImplementedException("This method is not overrided.");
+        public virtual Vector<TNum> this[IList<int> indexList] => throw new NotImplementedException("This method is not overrided.");
         #endregion
         protected void CheckIndex(int i)
         {
             if (i < 0 || Length <= i) throw new ArgumentException("Wrong index");
         }
-        protected void CheckArrayLength(double[] arr)
+        protected void CheckArrayLength(TNum[] arr)
         {
             if (arr.Length != Length) throw new ArgumentException("The input array has different length.");
         }
-        internal static void CheckVecLength(Vector vec1, Vector vec2)
+        internal static void CheckVecLength(Vector<TNum> vec1, Vector<TNum> vec2)
         {
             if (vec1.Length != vec2.Length) throw new ArgumentException("Lengths of two vectors are different.");
         }
         
-        public virtual void SetValue(double[] arr) { throw new NotImplementedException("This method is not overrided."); }
-        public virtual double[] To1DArray() { throw new NotImplementedException("This method is not overrided."); }
-        #region Statistics Methods and Properties
-        public double Sum => CalculateSum();
-        private double CalculateSum()
+        public virtual void SetValue(TNum[] arr) { throw new NotImplementedException("This method is not overrided."); }
+        public virtual TNum[] To1DArray() { throw new NotImplementedException("This method is not overrided."); }
+        public virtual Vector<TNum> Clone() => throw new NotImplementedException("This method is not overrided.");
+        public virtual Vector<TNum> MapElementwise(Func<TNum, TNum> func) => throw new NotImplementedException("This method is not overrided.");
+        public List<int> FilterElementwise(Func<TNum, bool> func)
         {
-            var res = 0.0;
+            var colLength = Length;
+            var res = new List<int>();
+
+            for (var colIdx = 0; colIdx < colLength; colIdx++)
+            {
+                if (func(this[colIdx])) res.Add(colIdx);
+            }
+
+            return res;
+        }
+        #region Statistics Methods and Properties
+        public TNum Sum => CalculateSum();
+        private TNum CalculateSum()
+        {
+            var res = TNum.Zero;
 
             for (var i = 0; i < Length; i++)
             {
@@ -51,34 +65,35 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public double Mean => Sum / (double)Length;
-        public double UnbiasedVariance => CalcUnbiasedVariance();
-        private double CalcUnbiasedVariance()
+        public TNum Mean => Sum / TNum.CreateSaturating<int>(Length);
+        public TNum UnbiasedVariance => CalcUnbiasedVariance();
+        private TNum CalcUnbiasedVariance()
         {
             if (Length == 1) throw new NotSupportedException("Cannnot calculate an unbiased variance for 1 sample.");
             var mean = Mean;
-            var res = 0.0;
+            var res = TNum.Zero;
 
             for (var i = 0; i < Length; i++)
             {
-                res += Math.Pow(this[i] - mean, 2.0);
+                var diff = this[i] - mean;
+                res += diff * diff;
             }
-            res /= (Length - 1.0);
+            res /= TNum.CreateSaturating(Length - 1.0);
 
             return res;
         }
-        public double StdDev => Math.Sqrt(UnbiasedVariance);
-        public double StdErr => StdDev / Math.Sqrt(Length);
-        public double Norm => CalculateNorm();
-        private double CalculateNorm()
+        public TNum StdDev => TNum.CreateSaturating(Math.Sqrt(double.CreateSaturating(UnbiasedVariance)));
+        public TNum StdErr => StdDev / TNum.CreateSaturating(double.Sqrt(Length));
+        public TNum Norm => CalculateNorm();
+        private TNum CalculateNorm()
         {
-            var res = 0.0;
+            var res = TNum.Zero;
             for (var i = 0; i < Length; i++)
             {
-                res += Math.Pow(this[i], 2.0);
+                res += this[i] * this[i];
             }
-
-            return Math.Sqrt(res);
+            
+            return TNum.CreateSaturating(double.Sqrt(double.CreateSaturating(res)));
         }
         #endregion
     }

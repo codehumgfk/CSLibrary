@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace MathUtils.LinearAlgebra
 {
-    public class Matrix
+    public class Matrix<TNum> where TNum : INumberBase<TNum>
     {
         private int RowLength;
         private int ColumnLength;
-        private double[,] _Matrix;
+        private TNum[,] _Matrix;
 
         #region Constructor
         public Matrix(int rowLength, int columnLength)
@@ -17,13 +18,13 @@ namespace MathUtils.LinearAlgebra
             if (rowLength < 1 || columnLength < 1) throw new ArgumentException("Lengths must be biggger than 1.");
             RowLength = rowLength;
             ColumnLength = columnLength;
-            _Matrix = new double[rowLength, columnLength];
+            _Matrix = new TNum[rowLength, columnLength];
         }
-        public Matrix(double[,] array)
+        public Matrix(TNum[,] array)
         {
             RowLength = array.GetLength(0);
             ColumnLength = array.GetLength(1);
-            _Matrix = new double[RowLength, ColumnLength];
+            _Matrix = new TNum[RowLength, ColumnLength];
 
             for (var i = 0; i < RowLength; i++)
             {
@@ -33,13 +34,13 @@ namespace MathUtils.LinearAlgebra
                 }
             }
         }
-        public Matrix(List<List<double>> nestedList)
+        public Matrix(List<List<TNum>> nestedList)
         {
             CheckNestedList(nestedList);
             
             RowLength = nestedList.Count;
             ColumnLength = nestedList[0].Count;
-            _Matrix = new double[RowLength, ColumnLength];
+            _Matrix = new TNum[RowLength, ColumnLength];
 
             for (var i = 0; i < RowLength; i++)
             {
@@ -49,7 +50,7 @@ namespace MathUtils.LinearAlgebra
                 }
             }
         }
-        private void CheckNestedList(List<List<double>> nested)
+        private void CheckNestedList(List<List<TNum>> nested)
         {
             var colLength = nested[0].Count;
             
@@ -61,7 +62,7 @@ namespace MathUtils.LinearAlgebra
         #endregion
 
         #region Indexer
-        public double this[int i, int j]
+        public TNum this[int i, int j]
         {
             get
             {
@@ -74,12 +75,12 @@ namespace MathUtils.LinearAlgebra
                 _Matrix[i, j] = value;
             }
         }
-        public double[] this[List<int[]> indexList]
+        public TNum[] this[List<int[]> indexList]
         {
             get
             {
                 var len = indexList.Count;
-                var res = new double[len];
+                var res = new TNum[len];
                 for (var i = 0; i < len; i++)
                 {
                     var index = indexList[0];
@@ -95,10 +96,10 @@ namespace MathUtils.LinearAlgebra
         public int[] Shape => new int[2] { RowLength, ColumnLength };
         
         public bool IsSquare => RowLength == ColumnLength;
-        public Matrix T => Transpose();
-        public Matrix Transpose()
+        public Matrix<TNum> T => Transpose();
+        public Matrix<TNum> Transpose()
         {
-            var transposed = new double[ColumnLength, RowLength];
+            var transposed = new TNum[ColumnLength, RowLength];
 
             for (var i = 0; i < RowLength; i++)
             {
@@ -108,13 +109,13 @@ namespace MathUtils.LinearAlgebra
                 }
             }
 
-            return new Matrix(transposed);
+            return new Matrix<TNum>(transposed);
         }
-        public double Tr => GetTrace();
-        public double GetTrace()
+        public TNum Tr => GetTrace();
+        public TNum GetTrace()
         {
             if (!IsSquare) throw new NotSupportedException();
-            var res = 0.0;
+            var res = TNum.Zero;
 
             for (var i = 0; i < RowLength; i++)
             {
@@ -123,13 +124,13 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public double Det => GetDeterminant();
-        public double GetDeterminant()
+        public TNum Det => GetDeterminant();
+        public TNum GetDeterminant()
         {
             if (!IsSquare) throw new NotSupportedException();
             if (RowLength == 1 && ColumnLength == 1) return _Matrix[0, 0];
 
-            var res = 0.0;
+            var res = TNum.Zero;
             for (var i = 0; i < RowLength; i++)
             {
                 res += _Matrix[i, 0] * GetCofactor(i, 0);
@@ -137,17 +138,17 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public double GetCofactor(int rowIdx, int colIdx)
+        public TNum GetCofactor(int rowIdx, int colIdx)
         {
             CheckRowColIndex(rowIdx, colIdx);
-            var sign = Math.Pow(-1, rowIdx + 1 + colIdx + 1);
+            var sign = TNum.CreateSaturating(Math.Pow(-1, rowIdx + 1 + colIdx + 1));
             var subMat = RemoveRow(rowIdx).RemoveColumn(colIdx);
 
             return sign * subMat.Det;
         }
-        public bool IsRegular => Det != 0.0;
-        public Matrix Inv => GetInverseMatrix();
-        public Matrix GetInverseMatrix()
+        public bool IsRegular => Det != TNum.Zero;
+        public Matrix<TNum> Inv => GetInverseMatrix();
+        public Matrix<TNum> GetInverseMatrix()
         {
             if (!IsRegular) throw new NotSupportedException();
 
@@ -156,9 +157,9 @@ namespace MathUtils.LinearAlgebra
 
             return adjMat / det;
         }
-        public Matrix GetAdjugateMatrix()
+        public Matrix<TNum> GetAdjugateMatrix()
         {
-            var res = new Matrix(RowLength, ColumnLength);
+            var res = new Matrix<TNum>(RowLength, ColumnLength);
 
             for (var i = 0; i < RowLength; i++)
             {
@@ -170,10 +171,10 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public RowVector InnerProduct(RowVector vec)
+        public RowVector<TNum> InnerProduct(RowVector<TNum> vec)
         {
             CheckVectorLengthForInnerProduct(vec);
-            var arr = new double[RowLength];
+            var arr = new TNum[RowLength];
 
             for (var i = 0; i < RowLength; i++)
             {
@@ -181,17 +182,17 @@ namespace MathUtils.LinearAlgebra
                 arr[i] = colVec * vec;
             }
 
-            return new RowVector(arr);
+            return new RowVector<TNum>(arr);
         }
-        private void CheckVectorLengthForInnerProduct(Vector vec)
+        private void CheckVectorLengthForInnerProduct(Vector<TNum> vec)
         {
             if (vec.Length != ColumnLength) throw new ArgumentException("Impossible to calculate an inner product. Wrong length.");
         }
-        public Matrix InnerProduct(Matrix b)
+        public Matrix<TNum> InnerProduct(Matrix<TNum> b)
         {
             CheckMatrixShapeForInnerProduct(b);
             var newColumnLength = b.Shape[1];
-            var resMat = new Matrix(RowLength, newColumnLength);
+            var resMat = new Matrix<TNum>(RowLength, newColumnLength);
 
             for (var k = 0; k < newColumnLength; k++)
             {
@@ -202,16 +203,16 @@ namespace MathUtils.LinearAlgebra
 
             return resMat;
         }
-        private void CheckMatrixShapeForInnerProduct(Matrix b)
+        private void CheckMatrixShapeForInnerProduct(Matrix<TNum> b)
         {
             var bshape = b.Shape;
 
             if (bshape[0] != ColumnLength) throw new ArgumentException("Impossible to take an inner product. Wrong shape.");
         }
-        public Matrix HadamarProduct(Matrix b)
+        public Matrix<TNum> HadamarProduct(Matrix<TNum> b)
         {
             CheckMatrixShapeForHadamarProduct(b);
-            var res = new Matrix(RowLength, ColumnLength);
+            var res = new Matrix<TNum>(RowLength, ColumnLength);
             for (var i = 0; i < RowLength; i++)
             {
                 for (var j = 0; j < ColumnLength; j++)
@@ -222,7 +223,7 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        private void CheckMatrixShapeForHadamarProduct(Matrix b)
+        private void CheckMatrixShapeForHadamarProduct(Matrix<TNum> b)
         {
             var bShape = b.Shape;
             if (bShape[0] != RowLength || bShape[1] != ColumnLength) throw new ArgumentException("Impossible to take Hadamar product. Wrong shape.");
@@ -240,29 +241,29 @@ namespace MathUtils.LinearAlgebra
             CheckRowIndex(i);
             CheckColIndex(j);
         }
-        public ColumnVector GetColumnVector(int rowIdx)
+        public ColumnVector<TNum> GetColumnVector(int rowIdx)
         {
             CheckRowIndex(rowIdx);
-            var arr = new double[ColumnLength];
+            var arr = new TNum[ColumnLength];
             for (var j = 0; j < ColumnLength; j++)
             {
                 arr[j] = _Matrix[rowIdx, j];
             }
 
-            return new ColumnVector(arr);
+            return new ColumnVector<TNum>(arr);
         }
-        public RowVector GetRowVector(int colIdx)
+        public RowVector<TNum> GetRowVector(int colIdx)
         {
             CheckColIndex(colIdx);
-            var arr = new double[RowLength];
+            var arr = new TNum[RowLength];
             for (var i = 0; i < RowLength; i++)
             {
                 arr[i] = _Matrix[i, colIdx];
             }
 
-            return new RowVector(arr);
+            return new RowVector<TNum>(arr);
         }
-        public void SetRowVector(int i, RowVector vec)
+        public void SetRowVector(int i, RowVector<TNum> vec)
         {
             CheckColIndex(i);
             if (vec.Length != RowLength) throw new ArgumentException();
@@ -272,7 +273,7 @@ namespace MathUtils.LinearAlgebra
                 _Matrix[rowIdx, i] = vec[rowIdx];
             }
         }
-        public void SetColumnVector(int row, ColumnVector vec)
+        public void SetColumnVector(int row, ColumnVector<TNum> vec)
         {
             CheckRowIndex(row);
             if (vec.Length != ColumnLength) throw new ArgumentException();
@@ -282,10 +283,10 @@ namespace MathUtils.LinearAlgebra
                 _Matrix[row, colIdx] = vec[colIdx];
             }
         }
-        public Matrix RemoveRow(int rowIdx)
+        public Matrix<TNum> RemoveRow(int rowIdx)
         {
             CheckRowIndex(rowIdx);
-            var res = new Matrix(RowLength - 1, ColumnLength);
+            var res = new Matrix<TNum>(RowLength - 1, ColumnLength);
 
             for (var i = 0; i < rowIdx; i++)
             {
@@ -304,10 +305,10 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public Matrix RemoveColumn(int colIdx)
+        public Matrix<TNum> RemoveColumn(int colIdx)
         {
             CheckColIndex(colIdx);
-            var res = new Matrix(RowLength, ColumnLength - 1);
+            var res = new Matrix<TNum>(RowLength, ColumnLength - 1);
 
             for (var i = 0; i < RowLength; i++)
             {
@@ -326,11 +327,11 @@ namespace MathUtils.LinearAlgebra
         }
 
         #region Convert Method
-        public RowVector ToRowVector()
+        public RowVector<TNum> ToRowVector()
         {
             if (ColumnLength != 1) throw new NotSupportedException("This matrix cannot be converted to RowVector.");
 
-            var res = new RowVector(RowLength);
+            var res = new RowVector<TNum>(RowLength);
             
             for (var i = 0; i < RowLength; i++)
             {
@@ -339,11 +340,11 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public ColumnVector ToColumnVector()
+        public ColumnVector<TNum> ToColumnVector()
         {
             if (RowLength != 1) throw new NotSupportedException("This matrix cannot be converted to ColumnVector.");
 
-            var res = new ColumnVector(ColumnLength);
+            var res = new ColumnVector<TNum>(ColumnLength);
 
             for (var i = 0; i < ColumnLength; i++)
             {
@@ -355,11 +356,11 @@ namespace MathUtils.LinearAlgebra
         #endregion
 
         #region Operator Overload
-        public static Matrix operator +(Matrix a, Matrix b)
+        public static Matrix<TNum> operator +(Matrix<TNum> a, Matrix<TNum> b)
         {
             CheckShapeForLinearOperator(a, b);
             var shape = a.Shape;
-            var res = new Matrix(shape[0], shape[1]);
+            var res = new Matrix<TNum>(shape[0], shape[1]);
 
             for (var i = 0; i < shape[0]; i++)
             {
@@ -371,10 +372,10 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static Matrix operator -(Matrix a)
+        public static Matrix<TNum> operator -(Matrix<TNum> a)
         {
             var shape = a.Shape;
-            var res = new Matrix(shape[0], shape[1]);
+            var res = new Matrix<TNum>(shape[0], shape[1]);
 
             for (var i = 0; i < shape[0]; i++)
             {
@@ -386,23 +387,23 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static Matrix operator -(Matrix a, Matrix b)
+        public static Matrix<TNum> operator -(Matrix<TNum> a, Matrix<TNum> b)
         {
             var c = -b;
 
             return a + c;
         }
-        private static void CheckShapeForLinearOperator(Matrix a, Matrix b)
+        private static void CheckShapeForLinearOperator(Matrix<TNum> a, Matrix<TNum> b)
         {
             var aShape = a.Shape;
             var bShape = b.Shape;
 
             if (aShape[0] != bShape[0] || aShape[1] != bShape[1]) throw new ArgumentException("Impossible to treat matrices with different shapes.");
         }
-        public static Matrix operator *(double n, Matrix mat)
+        public static Matrix<TNum> operator *(TNum n, Matrix<TNum> mat)
         {
             var shape = mat.Shape;
-            var res = new Matrix(shape[0], shape[1]);
+            var res = new Matrix<TNum>(shape[0], shape[1]);
 
             for (var i = 0; i < shape[0]; i++)
             {
@@ -414,33 +415,33 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static Matrix operator *(Matrix mat, double n)
+        public static Matrix<TNum> operator *(Matrix<TNum> mat, TNum n)
         {
             return n * mat;
         }
-        public static RowVector operator *(Matrix a, RowVector b)
+        public static RowVector<TNum> operator *(Matrix<TNum> a, RowVector<TNum> b)
         {
             return a.InnerProduct(b);
         }
-        public static ColumnVector operator *(ColumnVector a, Matrix b)
+        public static ColumnVector<TNum> operator *(ColumnVector<TNum> a, Matrix<TNum> b)
         {
             var newColVec = a.ToMatrix();
             var resMatrix = newColVec * b;
 
             return resMatrix.GetColumnVector(0);
         }
-        public static Matrix operator *(Matrix a, Matrix b)
+        public static Matrix<TNum> operator *(Matrix<TNum> a, Matrix<TNum> b)
         {
             return a.InnerProduct(b);
         }
-        public static Matrix operator/ (Matrix a, Matrix b)
+        public static Matrix<TNum> operator/ (Matrix<TNum> a, Matrix<TNum> b)
         {
             throw new NotSupportedException("Division of matrices is not supported.");
         }
-        public static Matrix operator /(Matrix a, double n)
+        public static Matrix<TNum> operator /(Matrix<TNum> a, TNum n)
         {
             var shape = a.Shape;
-            var res = new Matrix(shape[0], shape[1]);
+            var res = new Matrix<TNum>(shape[0], shape[1]);
 
             for (var i = 0; i < shape[0]; i++)
             {

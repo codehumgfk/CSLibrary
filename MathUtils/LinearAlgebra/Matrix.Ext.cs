@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace MathUtils.LinearAlgebra
@@ -7,7 +8,7 @@ namespace MathUtils.LinearAlgebra
     public static class MatrixExtensions
     {
         #region Sum Methods
-        public static Matrix Sum(this Matrix matrix, EMatrixAxis axis)
+        public static Matrix<TNum> Sum<TNum>(this Matrix<TNum> matrix, EMatrixAxis axis) where TNum : INumberBase<TNum>
         {
             switch (axis)
             {
@@ -19,11 +20,11 @@ namespace MathUtils.LinearAlgebra
                     throw new NotSupportedException();
             }
         }
-        private static Matrix SumUpColumn(this Matrix matrix)
+        private static Matrix<TNum> SumUpColumn<TNum>(this Matrix<TNum> matrix) where TNum : INumberBase<TNum>
         {
             var rowLength = matrix.Shape[0];
             var colLength = matrix.Shape[1];
-            var res = new Matrix(rowLength, 1);
+            var res = new Matrix<TNum>(rowLength, 1);
 
             for (var rowIdx = 0; rowIdx < rowLength; rowIdx++)
             {
@@ -35,11 +36,11 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        private static Matrix SumUpRow(this Matrix matrix)
+        private static Matrix<TNum> SumUpRow<TNum>(this Matrix<TNum> matrix) where TNum : INumberBase<TNum>
         {
             var rowLength = matrix.Shape[0];
             var colLength = matrix.Shape[1];
-            var res = new Matrix(1, colLength);
+            var res = new Matrix<TNum>(1, colLength);
 
             for (var colIdx = 0; colIdx < colLength; colIdx++)
             {
@@ -51,12 +52,12 @@ namespace MathUtils.LinearAlgebra
             
             return res;
         }
-        public static Matrix Sum(this Matrix matrix)
+        public static Matrix<TNum> Sum<TNum>(this Matrix<TNum> matrix) where TNum : INumberBase<TNum>
         {
             var shape = matrix.Shape;
             var rowLength = shape[0];
             var colLength = shape[1];
-            var res = new Matrix(1, 1);
+            var res = new Matrix<TNum>(1, 1);
 
             for (var rowIdx = 0; rowIdx < rowLength; rowIdx++)
             {
@@ -70,12 +71,12 @@ namespace MathUtils.LinearAlgebra
         }
         #endregion
 
-        public static Matrix MapElementwise(this Matrix matrix, Func<double, double> func)
+        public static Matrix<TNum> MapElementwise<TNum>(this Matrix<TNum> matrix, Func<TNum, TNum> func) where TNum : INumberBase<TNum>
         {
             var shape = matrix.Shape;
             var rowLength = shape[0];
             var colLength = shape[1];
-            var res = new Matrix(rowLength, colLength);
+            var res = new Matrix<TNum>(rowLength, colLength);
 
             for (var rowIdx = 0; rowIdx < rowLength; rowIdx++)
             {
@@ -87,7 +88,7 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public static List<int[]> FilterElementwise(this Matrix matrix, Func<double, bool> func)
+        public static List<int[]> FilterElementwise<TNum>(this Matrix<TNum> matrix, Func<TNum, bool> func) where TNum : INumberBase<TNum>
         {
             var shape = matrix.Shape;
             var rowLength = shape[0];

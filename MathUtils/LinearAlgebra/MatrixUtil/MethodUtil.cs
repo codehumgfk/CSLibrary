@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace MathUtils.LinearAlgebra.MatrixUtil
 {
     public static class MethodUtil
     {
-        public static (Matrix, Matrix) Diagonalize(Matrix a)
+        public static (Matrix<TNum>, Matrix<TNum>) Diagonalize<TNum>(Matrix<TNum> a) where TNum : INumberBase<TNum>
         {
-            var P = new Matrix(1, 1);
-            var D = new Matrix(1, 1);
+            var P = new Matrix<TNum>(1, 1);
+            var D = new Matrix<TNum>(1, 1);
 
             return (P, D);
         }

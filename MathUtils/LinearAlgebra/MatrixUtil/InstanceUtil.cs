@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace MathUtils.LinearAlgebra.MatrixUtil
 {
     public static class InstanceUtil
     {
-        public static Matrix GetIdentityMatrix(int n)
+        public static Matrix<TNum> GetIdentityMatrix<TNum>(int n) where TNum : INumberBase<TNum>
         {
-            var res = new Matrix(n, n);
+            var res = new Matrix<TNum>(n, n);
 
             for (var i = 0; i < n; i++)
             {
-                res[i, i] = 1.0;
+                res[i, i] = TNum.MultiplicativeIdentity;
             }
 
             return res;
