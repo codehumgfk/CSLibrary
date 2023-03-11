@@ -10,7 +10,7 @@ namespace MathUtils.Test.LinearAlgebra
         public static void Execute()
         {
             var arr = new double[2] { 1, 1 };
-            var colVec = new ColumnVector(arr);
+            var colVec = new ColumnVector<double>(arr);
 
             Console.WriteLine(colVec.ToString());
         }

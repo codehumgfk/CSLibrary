@@ -10,9 +10,9 @@ namespace MathUtils.Test.LinearAlgebra
         public static void Execute()
         {
             var arr = new double[2, 2] { { 1, 2 }, { 3, 4 } };
-            var matrix = new Matrix(arr);
+            var matrix = new Matrix<double>(arr);
             var arr2 = new double[2] { 1, 1 };
-            var colVec = new ColumnVector(arr2);
+            var colVec = new ColumnVector<double>(arr2);
 
             Console.WriteLine(colVec * matrix); // ans must be [[4, 6]]
         }
