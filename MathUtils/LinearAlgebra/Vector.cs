@@ -65,36 +65,7 @@ namespace MathUtils.LinearAlgebra
 
             return res;
         }
-        public TNum Mean => Sum / TNum.CreateSaturating<int>(Length);
-        public TNum UnbiasedVariance => CalcUnbiasedVariance();
-        private TNum CalcUnbiasedVariance()
-        {
-            if (Length == 1) throw new NotSupportedException("Cannnot calculate an unbiased variance for 1 sample.");
-            var mean = Mean;
-            var res = TNum.Zero;
-
-            for (var i = 0; i < Length; i++)
-            {
-                var diff = this[i] - mean;
-                res += diff * diff;
-            }
-            res /= TNum.CreateSaturating(Length - 1.0);
-
-            return res;
-        }
-        public TNum StdDev => TNum.CreateSaturating(Math.Sqrt(double.CreateSaturating(UnbiasedVariance)));
-        public TNum StdErr => StdDev / TNum.CreateSaturating(double.Sqrt(Length));
-        public TNum Norm => CalculateNorm();
-        private TNum CalculateNorm()
-        {
-            var res = TNum.Zero;
-            for (var i = 0; i < Length; i++)
-            {
-                res += this[i] * this[i];
-            }
-            
-            return TNum.CreateSaturating(double.Sqrt(double.CreateSaturating(res)));
-        }
+        public TNum Mean => Sum / TNum.CreateSaturating(Length);
         #endregion
     }
 }
